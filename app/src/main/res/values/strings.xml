@@ -1,14 +1,11 @@
 <resources>
     <string name="app_name">MediaPlayerApp</string>
 
-    <string name="audio_player">Audio Player</string>
     <string name="open_audio">Open Audio File</string>
+    <string name="open_video">Open Video URL</string>
+    <string name="enter_url">Enter Video URL</string>
     <string name="play">Play</string>
     <string name="pause">Pause</string>
     <string name="stop">Stop</string>
     <string name="restart">Restart</string>
-
-    <string name="video_player">Video Player</string>
-    <string name="enter_url">Enter Video URL</string>
-    <string name="load_video">Load Video</string>
 </resources>
