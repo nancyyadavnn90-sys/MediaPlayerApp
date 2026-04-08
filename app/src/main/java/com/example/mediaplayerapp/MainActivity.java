@@ -17,11 +17,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 
+import android.widget.ProgressBar;
+import android.view.View;
+
 public class MainActivity extends AppCompatActivity {
 
     MediaPlayer mediaPlayer;
     VideoView videoView;
     EditText etUrl;
+    ProgressBar progressBar;
 
     Uri audioUri = null;
     Uri videoUri = null;
@@ -44,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         videoView = findViewById(R.id.videoView);
         etUrl = findViewById(R.id.etUrl);
+        progressBar = findViewById(R.id.progressBar);
 
         Button btnOpenFile = findViewById(R.id.btnOpenFile);
         Button btnOpenURL = findViewById(R.id.btnOpenURL);
@@ -89,14 +94,24 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
+            progressBar.setVisibility(View.VISIBLE);
             videoUri = Uri.parse(url);
             videoView.setVideoURI(videoUri);
+
+            videoView.setOnPreparedListener(mp -> {
+                progressBar.setVisibility(View.GONE);
+                videoView.start();
+            });
+
+            videoView.setOnErrorListener((mp, what, extra) -> {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(this, "Cannot play this video. Check URL or format.", Toast.LENGTH_SHORT).show();
+                return true;
+            });
 
             MediaController controller = new MediaController(this);
             videoView.setMediaController(controller);
             controller.setAnchorView(videoView);
-
-            videoView.start();
         });
 
         // ▶️ PLAY
